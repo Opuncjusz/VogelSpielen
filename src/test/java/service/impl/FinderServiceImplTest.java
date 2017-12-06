@@ -1,5 +1,7 @@
 package service.impl;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,9 +22,19 @@ public class FinderServiceImplTest {
 	private FinderService finderService;
     
     @Test
-    public void shouldReturnFloorsListSortedByDistanceToStartingFloorAscendingStartingFloor5() {
+    // Mock test
+    public void statusTest() {
     	long status = finderService.getStatus();
     	Assert.assertEquals(CommonTO.STATUS_SEARCH, status);
+    }
+    
+    @Test
+    // Mock test
+    public void stakeholdersTest() {
+    	List<String> currentStakeholdersMock = finderService.getCurrentStakeholders();
+    	
+    	Assert.assertFalse(currentStakeholdersMock.isEmpty());
+    	Assert.assertEquals(4, currentStakeholdersMock.size());
     }
 
 	
