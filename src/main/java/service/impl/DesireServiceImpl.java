@@ -22,6 +22,7 @@ public class DesireServiceImpl implements DesireService {
     public void handleIncomingDesire(Stakeholder stakeholder, DesireTO desireTO) {
         Desire desire = new Desire();
         desire.setStakeholder(stakeholder);
+        desire.setId(desireTO.getId() == null ? 0 : desireTO.getId());
         desireRepository.addOrUpdate(desire);
     }
 
@@ -44,7 +45,7 @@ public class DesireServiceImpl implements DesireService {
     private List<DesireTO> mapEntitiesToTOs(List<Desire> desireEntities) {
         List<DesireTO> desireTOs = new ArrayList();
         for (Desire desire : desireEntities) {
-            desireTOs.add(DesireTO.from(desire));
+            desireTOs.add(DesireTO.createFromDesire(desire));
         }
         return desireTOs;
     }
