@@ -1,8 +1,12 @@
 package frontend;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,52 +14,92 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import common.CommonTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import common.AnswerTO;
+import common.DesireTO;
+import common.MatchTO;
 import starter.DevelopmentConfiguration;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/")
 public class MobileClientController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
 
-	// @Autowired
-	// private FinderService finderService;
-
-	@RequestMapping(method = RequestMethod.POST, value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public CommonTO getStatusPOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
+	@RequestMapping(method = RequestMethod.POST, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO getStatusPOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
 
 		LOG.info("userId = " + userId);
 		LOG.info("requestBody = " + requestBody);
 
-		// long status = finderService.getStatus();
-		CommonTO commonTO = createCommonTO(0);
+		DesireTO desireTO = getDesireTO(requestBody);
 
-		return commonTO;
+		return createAnswer();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public CommonTO getStatusGET(@PathVariable("userId") String userId) {
-		CommonTO status = getStatusPOST(userId, "[RequestMethod.GET]");
-		status.setMessage("ONLY POST METHOD IST AVAILABLE");
+	@RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
+		LOG.warn("");
+		LOG.warn("");
+		LOG.warn("Achtung! Es wurde RequestMethod.GET durchgeführt!");
+		LOG.warn("Diese Method wird in der Zukunft nicht existieren!");
+		LOG.warn("");
+		LOG.warn("");
+
+		AnswerTO status = getStatusPOST(userId, "");
+		status.setMessage("[RequestMethod.GET] - ONLY POST METHOD WILL BE AVAILABLE");
 		return status;
 	}
 
-	// @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}",
-	// produces = MediaType.APPLICATION_JSON_VALUE)
-	// public String getStatus() {
-	// String msg = "ONLY POST METHOD IST AVAILABLE";
-	// LOG.info(msg);
-	// return msg;
-	// }
+	@RequestMapping(method = RequestMethod.POST, value = "desire/put/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO putDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
 
-	private CommonTO createCommonTO(long status) {
-		CommonTO commonTO = new CommonTO();
-		commonTO.setId(767676);
-		commonTO.setStatusId(status);
+		LOG.info("==== putDesirePOST ====");
+		LOG.info("userId = " + userId);
+		LOG.info("requestBody = " + requestBody);
 
-		return commonTO;
+		AnswerTO answer = new AnswerTO();
+		answer.setMessage("putDesirePOST");
+
+		return answer;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "desire/delete/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO deleteDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
+
+		LOG.info("==== deleteDesirePOST ====");
+		LOG.info("userId = " + userId);
+		LOG.info("requestBody = " + requestBody);
+
+		AnswerTO answer = new AnswerTO();
+		answer.setMessage("deleteDesirePOST");
+
+		return answer;
+	}
+
+	private AnswerTO createAnswer() {
+		AnswerTO answerTO = new AnswerTO();
+		answerTO.setId(System.currentTimeMillis());
+		answerTO.setDesires(new ArrayList<DesireTO>());
+		answerTO.setMatches(new ArrayList<MatchTO>());
+		answerTO.setMessage("Mock answer");
+
+		return answerTO;
+	}
+
+	private DesireTO getDesireTO(String body) {
+		if (StringUtils.isEmpty(body)) {
+			return new DesireTO();
+		}
+
+		try {
+			return new ObjectMapper().readValue(body, DesireTO.class);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 
 }
