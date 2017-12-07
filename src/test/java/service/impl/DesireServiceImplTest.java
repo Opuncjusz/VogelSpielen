@@ -22,7 +22,7 @@ public class DesireServiceImplTest {
 	@Test
 	public void addGameRequestTest() {
 		int currentNumberOfDesires = desireService.getAllDesires().size();
-        Stakeholder stakeholder = new Stakeholder();
+        Stakeholder stakeholder = new Stakeholder("dupa");
 
 		DesireTO desireTO = new DesireTO();
         desireService.handleIncomingDesire(stakeholder, desireTO);
@@ -34,7 +34,7 @@ public class DesireServiceImplTest {
 	@Test
 	public void cancelGameRequestTest() {
 		int startNumberOfDesires = desireService.getAllDesires().size();
-        Stakeholder stakeholder = new Stakeholder();
+        Stakeholder stakeholder = new Stakeholder("dupa");
 
 		DesireTO desireTO = new DesireTO();
         desireService.handleIncomingDesire(stakeholder, desireTO);
