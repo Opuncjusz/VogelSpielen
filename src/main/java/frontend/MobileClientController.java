@@ -94,7 +94,6 @@ public class MobileClientController {
 		}
 
 		answerTO.setMatches(allMatchesByStakeholderTO);
-		answerTO.setMessage("userId: " + userId);
 
 		try {
 			ObjectMapper mapperObj = new ObjectMapper();
