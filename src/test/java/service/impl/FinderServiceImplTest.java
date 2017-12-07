@@ -36,6 +36,43 @@ public class FinderServiceImplTest {
     	Assert.assertFalse(currentStakeholdersMock.isEmpty());
     	Assert.assertEquals(4, currentStakeholdersMock.size());
     }
+    
+    
+    @Test
+    public void notifyWhenMatchHasBeenFoundTest() {
+    	Assert.fail();
+    }
+    
+    @Test
+    public void dontNotifyWhenMatchHasNotBeenFoundTest() {
+    	Assert.fail();
+    }
+    
+    @Test
+    public void addGameRequestTest() {
+    	Assert.fail();
+    }
+    
+    @Test
+    public void cancelGameRequestTest() {
+    	Assert.fail();
+    }
+    
+    @Test
+    public void getCurrentRequestStatusWhenGameIsNotFound() {
+    	Assert.fail();
+    }
+    
+    @Test
+    public void getCurrentRequestStatusWhenGameHasBeenFound() {
+    	Assert.fail();
+    } 
+    
+    @Test
+    public void getCurrentRequestStatusWhenRequestDoesNotExist() {
+    	Assert.fail();
+    }
+    
 
 	
 }
