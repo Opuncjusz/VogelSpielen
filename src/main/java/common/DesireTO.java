@@ -8,13 +8,13 @@ public class DesireTO {
 	public static DesireTO createFromDesire(Desire desire) {
 		DesireTO desireTO = new DesireTO();
 
-		desire.setId(desire.getId());
-		desire.setStakeholder(desire.getStakeholder());
-		desire.setFrom(desire.getFrom());
-		desire.setPlace(desire.getPlace());
-		desire.setRequired(desire.getRequired());
-		desire.setTo(desire.getTo());
-		desire.setTotal(desire.getTotal());
+		desireTO.setId(desire.getId());
+		desireTO.setStakeholder(desire.getStakeholder());
+		desireTO.setFrom(desire.getFrom());
+		desireTO.setPlace(desire.getPlace());
+		desireTO.setRequired(desire.getRequired());
+		desireTO.setTo(desire.getTo());
+		desireTO.setTotal(desire.getTotal());
 
 		return desireTO;
 	}
