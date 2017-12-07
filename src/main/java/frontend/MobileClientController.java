@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import common.AnswerTO;
 import common.DesireTO;
 import common.MatchTO;
+import model.Stakeholder;
+import service.DesireService;
 import starter.DevelopmentConfiguration;
 
 @CrossOrigin
@@ -27,6 +30,9 @@ import starter.DevelopmentConfiguration;
 public class MobileClientController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
+
+	@Autowired
+	private DesireService desireService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
@@ -44,10 +50,10 @@ public class MobileClientController {
 		LOG.info("userId = " + userId);
 		LOG.info("requestBody = " + requestBody);
 
-		AnswerTO answer = new AnswerTO();
-		answer.setMessage("putDesirePOST");
+		DesireTO desireTO = getDesireTO(requestBody);
+		desireService.handleIncomingDesire(new Stakeholder(userId), desireTO);
 
-		return answer;
+		return createAnswer(userId);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "desire/delete/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,18 +63,21 @@ public class MobileClientController {
 		LOG.info("userId = " + userId);
 		LOG.info("requestBody = " + requestBody);
 
-		AnswerTO answer = new AnswerTO();
-		answer.setMessage("deleteDesirePOST");
+		DesireTO desireTO = getDesireTO(requestBody);
+		desireService.canelDesire(desireTO);
 
-		return answer;
+		return createAnswer(userId);
 	}
 
 	private AnswerTO createAnswer(String userId) {
+		Stakeholder stakeholder = new Stakeholder(userId);
+
 		AnswerTO answerTO = new AnswerTO();
+
 		answerTO.setId(System.currentTimeMillis());
-		answerTO.setDesires(new ArrayList<DesireTO>());
+		answerTO.setDesires(desireService.getAllDesiresByStakeholder(stakeholder));
 		answerTO.setMatches(new ArrayList<MatchTO>());
-		answerTO.setMessage("Mock answer, userId: " + userId);
+		answerTO.setMessage("userId: " + userId);
 
 		return answerTO;
 	}

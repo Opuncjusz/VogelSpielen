@@ -2,14 +2,18 @@ package model;
 
 public class Stakeholder {
 
-	private long id;
+	private String id;
 	private String clientMobileToken;
 
-	public long getId() {
+	public Stakeholder(String userId) {
+		this.id = userId;
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
