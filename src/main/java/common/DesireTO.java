@@ -4,11 +4,21 @@ import model.Desire;
 
 public class DesireTO {
 
-	String place;
+    Long id;
+
+    String place;
 	String total;
 	String from;
 	String to;
 	String required;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 	@Override
 	public int hashCode() {

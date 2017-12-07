@@ -18,24 +18,23 @@ public class DesireServiceImpl implements DesireService {
     @Autowired
     DesireRepository desireRepository;
 
-	@Override
+    @Override
     public void handleIncomingDesire(Stakeholder stakeholder, DesireTO desireTO) {
         Desire desire = new Desire();
         desire.setStakeholder(stakeholder);
         desireRepository.addOrUpdate(desire);
-	}
+    }
 
-	@Override
-	public void canelDesire(DesireTO desireTO) {
-		// TODO Auto-generated method stub
+    @Override
+    public void canelDesire(DesireTO desireTO) {
+        Desire desire = desireRepository.getById(desireTO.getId());
+        desireRepository.delete(desire);
+    }
 
-	}
-
-	@Override
+    @Override
     public List<DesireTO> getAllDesires() {
         return mapEntitiesToTOs(desireRepository.getAllDesires());
-	}
-
+    }
 
     @Override
     public List<DesireTO> getAllDesiresByStakeholder(Stakeholder stakeholder) {

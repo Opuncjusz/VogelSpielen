@@ -16,51 +16,52 @@ import test.TestApplicationContext;
 @SpringBootTest(classes = TestApplicationContext.class)
 public class DesireServiceImplTest {
 
-	@Autowired
-	private DesireService desireService;
+    @Autowired
+    private DesireService desireService;
 
-	@Test
-	public void addGameRequestTest() {
-		int currentNumberOfDesires = desireService.getAllDesires().size();
+    @Test
+    public void addGameRequestTest() {
+        int currentNumberOfDesires = desireService.getAllDesires().size();
         Stakeholder stakeholder = new Stakeholder("dupa");
 
-		DesireTO desireTO = new DesireTO();
+        DesireTO desireTO = new DesireTO();
         desireService.handleIncomingDesire(stakeholder, desireTO);
 
-		Assert.assertEquals(currentNumberOfDesires + 1, desireService.getAllDesires().size());
+        Assert.assertEquals(currentNumberOfDesires + 1, desireService.getAllDesires().size());
         Assert.assertTrue(desireService.getAllDesiresByStakeholder(stakeholder).contains(desireTO));
-	}
+    }
 
-	@Test
-	public void cancelGameRequestTest() {
-		int startNumberOfDesires = desireService.getAllDesires().size();
+    @Test
+    public void cancelGameRequestTest() {
+        int startNumberOfDesires = desireService.getAllDesires().size();
         Stakeholder stakeholder = new Stakeholder("dupa");
 
-		DesireTO desireTO = new DesireTO();
+        DesireTO desireTO = new DesireTO();
+        desireTO.setId((long) 1);
         desireService.handleIncomingDesire(stakeholder, desireTO);
 
-		Assert.assertEquals(startNumberOfDesires + 1, desireService.getAllDesires().size());
-		Assert.assertTrue(desireService.getAllDesires().contains(desireTO));
+        Assert.assertEquals(startNumberOfDesires + 1, desireService.getAllDesires().size());
+        Assert.assertTrue(desireService.getAllDesires().contains(desireTO));
 
-		desireService.canelDesire(desireTO);
+        desireService.canelDesire(desireTO);
 
-		Assert.assertEquals(startNumberOfDesires, desireService.getAllDesires().size());
-		Assert.assertFalse(desireService.getAllDesires().contains(desireTO));
-	}
+        Assert.assertEquals(startNumberOfDesires, desireService.getAllDesires().size());
+        Assert.assertFalse(desireService.getAllDesires().contains(desireTO));
+    }
 
-	@Test
-	public void getCurrentRequestStatusWhenGameIsNotFound() {
-		Assert.fail();
-	}
+    @Test
+    public void getCurrentRequestStatusWhenGameIsNotFound() {
+        Assert.fail();
+    }
 
-	@Test
-	public void getCurrentRequestStatusWhenGameHasBeenFound() {
-		Assert.fail();
-	}
+    @Test
+    public void getCurrentRequestStatusWhenGameHasBeenFound() {
+        Assert.fail();
+    }
 
-	@Test
-	public void getCurrentRequestStatusWhenRequestDoesNotExist() {
-		Assert.fail();
-	}
+    @Test
+    public void getCurrentRequestStatusWhenRequestDoesNotExist() {
+        Assert.fail();
+    }
 
 }

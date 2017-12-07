@@ -9,7 +9,7 @@ public interface DesireService {
 
     void handleIncomingDesire(Stakeholder stakeholder, DesireTO desireTO);
 
-	void canelDesire(DesireTO desireTO);
+    void canelDesire(DesireTO desireTO);
 
 	List<DesireTO> getAllDesires();
 
