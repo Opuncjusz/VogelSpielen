@@ -15,6 +15,7 @@ import repository.DesireRepository;
 public class DesireRepositoryImpl implements DesireRepository {
 
     private Map<Long, Desire> dataBase = new HashMap();
+    long sequence = 1;
 
 	@Override
 	public Desire getById(long id) {
@@ -24,14 +25,11 @@ public class DesireRepositoryImpl implements DesireRepository {
 	@Override
 	public void addOrUpdate(Desire desire) {
         if (desire.getId() == 0) {
-            desire.setId(generateId());
+            desire.setId(sequence);
+            sequence++;
         }
 		dataBase.put(desire.getId(), desire);
 	}
-
-    private int generateId() {
-        return dataBase.size() + 1;
-    }
 
 	@Override
 	public void delete(Desire desire) {
