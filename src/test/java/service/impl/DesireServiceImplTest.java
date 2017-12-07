@@ -48,20 +48,4 @@ public class DesireServiceImplTest {
         Assert.assertEquals(startNumberOfDesires, desireService.getAllDesires().size());
         Assert.assertFalse(desireService.getAllDesires().contains(desireTO));
     }
-
-    @Test
-    public void getCurrentRequestStatusWhenGameIsNotFound() {
-        Assert.fail();
-    }
-
-    @Test
-    public void getCurrentRequestStatusWhenGameHasBeenFound() {
-        Assert.fail();
-    }
-
-    @Test
-    public void getCurrentRequestStatusWhenRequestDoesNotExist() {
-        Assert.fail();
-    }
-
 }

@@ -9,67 +9,92 @@ import model.Match;
 
 public class MatchTO {
 
-	public static MatchTO createFromMatch(Match match) {
-		MatchTO matchTO = new MatchTO();
-		matchTO.setFrom(match.getFrom());
-		matchTO.setId(match.getId());
-		matchTO.setPlace(match.getPlace());
-		matchTO.setTo(match.getTo());
+    private List<DesireTO> desires;
+    private long id;
+    private Date from;
+    private Date to;
+    private String place;
 
-		List<DesireTO> desireTO = new ArrayList<DesireTO>();
-		for (Desire each : match.getDesires()) {
-			desireTO.add(DesireTO.createFromDesire(each));
-		}
+    public List<DesireTO> getDesires() {
+        return desires;
+    }
 
-		matchTO.setDesires(desireTO);
+    public void setDesires(List<DesireTO> desires) {
+        this.desires = desires;
+    }
 
-		return matchTO;
-	}
+    public long getId() {
+        return id;
+    }
 
-	private List<DesireTO> desires;
-	private long id;
-	private Date from;
-	private Date to;
-	private String place;
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public List<DesireTO> getDesires() {
-		return desires;
-	}
+    public Date getFrom() {
+        return from;
+    }
 
-	public void setDesires(List<DesireTO> desires) {
-		this.desires = desires;
-	}
+    public void setFrom(Date from) {
+        this.from = from;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public Date getTo() {
+        return to;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setTo(Date to) {
+        this.to = to;
+    }
 
-	public Date getFrom() {
-		return from;
-	}
+    public String getPlace() {
+        return place;
+    }
 
-	public void setFrom(Date from) {
-		this.from = from;
-	}
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
-	public Date getTo() {
-		return to;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
 
-	public void setTo(Date to) {
-		this.to = to;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        MatchTO other = (MatchTO) obj;
+        if (id != other.id) {
+            return false;
+        }
+        return true;
+    }
 
-	public String getPlace() {
-		return place;
-	}
+    public static MatchTO createFromMatch(Match match) {
+        MatchTO matchTO = new MatchTO();
+        matchTO.setFrom(match.getFrom());
+        matchTO.setId(match.getId());
+        matchTO.setPlace(match.getPlace());
+        matchTO.setTo(match.getTo());
 
-	public void setPlace(String place) {
-		this.place = place;
-	}
+        List<DesireTO> desireTO = new ArrayList<>();
+        for (Desire each : match.getDesires()) {
+            desireTO.add(DesireTO.createFromDesire(each));
+        }
 
+        matchTO.setDesires(desireTO);
+
+        return matchTO;
+    }
 }

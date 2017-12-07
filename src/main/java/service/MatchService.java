@@ -2,15 +2,14 @@ package service;
 
 import java.util.List;
 
-import model.Desire;
-import model.Match;
+import common.MatchTO;
 import model.Stakeholder;
 
 public interface MatchService {
 
-	List<Match> getAllMatchesByStakeholder(Stakeholder stakeholder);
+    List<MatchTO> getAllMatchesByStakeholder(Stakeholder stakeholder);
 
-	List<Match> getAllNewMatches();
+    List<MatchTO> getAllNewMatches();
 
-	void createMatch(List<Desire> desires);
+    void addOrUpdateMatch(MatchTO matchTO);
 }
