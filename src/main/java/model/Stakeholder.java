@@ -2,13 +2,10 @@ package model;
 
 public class Stakeholder {
 
-	private static long sequence = 0;
-
 	private String clientMobileToken;
 
 	public Stakeholder(String clientMobileToken) {
 		this.clientMobileToken = clientMobileToken;
-		sequence++;
 	}
 
 	public String getClientMobileToken() {

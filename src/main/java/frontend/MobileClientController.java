@@ -106,7 +106,8 @@ public class MobileClientController {
 		// FIX FUER HERR WEBER
 		// answerTO.setId(answerTO.getId() % 1000);
 		for (DesireTO each : answerTO.getDesires()) {
-			if (each.getStakeholder().getClientMobileToken() != null) {
+			if (each.getStakeholder().getClientMobileToken() != null
+					&& each.getStakeholder().getClientMobileToken().length() > 5) {
 				each.getStakeholder()
 						.setClientMobileToken(each.getStakeholder().getClientMobileToken().substring(0, 4));
 			}
