@@ -1,22 +1,29 @@
 package service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import common.MatchTO;
+import model.Match;
 import model.Stakeholder;
+import repository.MatchRepository;
 import service.MatchService;
 
 @Service
 public class MatchServiceImpl implements MatchService {
 
+	@Autowired
+	private MatchRepository matchRepository;
+
 	@Override
-	public List<MatchTO> getAllMatchesByStakeholder(Stakeholder stakeholder) {
-		return new ArrayList<MatchTO>();
-		// return
-		// mapEntitiesToTOs(desireRepository.getAllDesiresByStakeholder(stakeholder));
+	public List<Match> getAllMatchesByStakeholder(Stakeholder stakeholder) {
+		return matchRepository.getAllMatchesByStakeholder(stakeholder);
+	}
+
+	@Override
+	public List<Match> getAllNewMatches() {
+		return matchRepository.getAllNewMatches();
 	}
 
 }

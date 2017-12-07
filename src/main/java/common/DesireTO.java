@@ -1,24 +1,40 @@
 package common;
 
 import model.Desire;
+import model.Stakeholder;
 
 public class DesireTO {
 
-    Long id;
+	public static DesireTO createFromDesire(Desire desire) {
+		DesireTO desireTO = new DesireTO();
 
-    String place;
+		desire.setId(desire.getId());
+		desire.setStakeholder(desire.getStakeholder());
+		desire.setFrom(desire.getFrom());
+		desire.setPlace(desire.getPlace());
+		desire.setRequired(desire.getRequired());
+		desire.setTo(desire.getTo());
+		desire.setTotal(desire.getTotal());
+
+		return desireTO;
+	}
+
+	Long id;
+
+	String place;
 	String total;
 	String from;
 	String to;
 	String required;
+	Stakeholder stakeholder;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@Override
 	public int hashCode() {
@@ -125,6 +141,14 @@ public class DesireTO {
 	public static DesireTO from(Desire desireEntity) {
 		DesireTO desireTO = new DesireTO();
 		return desireTO;
+	}
+
+	public Stakeholder getStakeholder() {
+		return stakeholder;
+	}
+
+	public void setStakeholder(Stakeholder stakeholder) {
+		this.stakeholder = stakeholder;
 	}
 
 }
