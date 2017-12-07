@@ -8,6 +8,7 @@ public class CommonTO {
 
 	private long id;
 	private long statusId;
+	private String message;
 
 	public long getId() {
 		return id;
@@ -23,6 +24,14 @@ public class CommonTO {
 
 	public void setStatusId(long statusId) {
 		this.statusId = statusId;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 }

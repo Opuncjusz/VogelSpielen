@@ -16,41 +16,44 @@ import starter.DevelopmentConfiguration;
 @RestController
 @RequestMapping("/client")
 public class MobileClientController {
-	
-    private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
 
-//    @Autowired
-//    private FinderService finderService;
+	private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonTO getStatusPOST(@PathVariable("userId") String userId) {
+	// @Autowired
+	// private FinderService finderService;
 
-    	LOG.info("userId = " + userId);
-    	
-//    	long status = finderService.getStatus();
-    	CommonTO commonTO = createCommonTO(0);
-    	
-        return commonTO;
-    }
-    
-    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonTO getStatusGET(@PathVariable("userId") String userId) {
-        return getStatusPOST(userId);
-    }
-    
-//    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public String getStatus() {
-//    	String msg = "ONLY POST METHOD IST AVAILABLE";
-//    	LOG.info(msg);
-//    	return msg;
-//    }
-    
-    private CommonTO createCommonTO(long status) {
-    	CommonTO commonTO = new CommonTO();
-    	commonTO.setId(767676);
-    	commonTO.setStatusId(status);
-    	
-    	return commonTO;
-    }
+	@RequestMapping(method = RequestMethod.POST, value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public CommonTO getStatusPOST(@PathVariable("userId") String userId) {
+
+		LOG.info("userId = " + userId);
+
+		// long status = finderService.getStatus();
+		CommonTO commonTO = createCommonTO(0);
+
+		return commonTO;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public CommonTO getStatusGET(@PathVariable("userId") String userId) {
+		CommonTO status = getStatusPOST(userId);
+		status.setMessage("ONLY POST METHOD IST AVAILABLE");
+		return getStatusPOST(userId);
+	}
+
+	// @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}",
+	// produces = MediaType.APPLICATION_JSON_VALUE)
+	// public String getStatus() {
+	// String msg = "ONLY POST METHOD IST AVAILABLE";
+	// LOG.info(msg);
+	// return msg;
+	// }
+
+	private CommonTO createCommonTO(long status) {
+		CommonTO commonTO = new CommonTO();
+		commonTO.setId(767676);
+		commonTO.setStatusId(status);
+
+		return commonTO;
+	}
 
 }
