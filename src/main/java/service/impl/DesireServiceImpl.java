@@ -20,9 +20,7 @@ public class DesireServiceImpl implements DesireService {
 
     @Override
     public void handleIncomingDesire(Stakeholder stakeholder, DesireTO desireTO) {
-        Desire desire = new Desire();
-        desire.setStakeholder(stakeholder);
-        desire.setId(desireTO.getId() == null ? 0 : desireTO.getId());
+        Desire desire = Desire.createFromDesireTO(stakeholder, desireTO);
         desireRepository.addOrUpdate(desire);
     }
 
