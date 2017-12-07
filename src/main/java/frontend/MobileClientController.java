@@ -53,7 +53,7 @@ public class MobileClientController {
 		return createAnswer(userId);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "desire/put/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "desire/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AnswerTO putDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
 
 		LOG.info("==== putDesirePOST ====");
