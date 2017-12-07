@@ -23,12 +23,12 @@ import starter.DevelopmentConfiguration;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/")
 public class MobileClientController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
 
-	@RequestMapping(method = RequestMethod.POST, value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AnswerTO getStatusPOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
 
 		LOG.info("userId = " + userId);
@@ -39,8 +39,8 @@ public class MobileClientController {
 		return createAnswer();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public AnswerTO getStatusGET() {
+	@RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
 		LOG.warn("");
 		LOG.warn("");
 		LOG.warn("Achtung! Es wurde RequestMethod.GET durchgeführt!");
@@ -48,9 +48,35 @@ public class MobileClientController {
 		LOG.warn("");
 		LOG.warn("");
 
-		AnswerTO status = getStatusPOST("MOCK USER", "");
+		AnswerTO status = getStatusPOST(userId, "");
 		status.setMessage("[RequestMethod.GET] - ONLY POST METHOD WILL BE AVAILABLE");
 		return status;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "desire/put/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO putDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
+
+		LOG.info("==== putDesirePOST ====");
+		LOG.info("userId = " + userId);
+		LOG.info("requestBody = " + requestBody);
+
+		AnswerTO answer = new AnswerTO();
+		answer.setMessage("putDesirePOST");
+
+		return answer;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "desire/delete/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO deleteDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
+
+		LOG.info("==== deleteDesirePOST ====");
+		LOG.info("userId = " + userId);
+		LOG.info("requestBody = " + requestBody);
+
+		AnswerTO answer = new AnswerTO();
+		answer.setMessage("deleteDesirePOST");
+
+		return answer;
 	}
 
 	private AnswerTO createAnswer() {
