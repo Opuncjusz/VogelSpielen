@@ -104,6 +104,15 @@ public class MobileClientController {
 			LOG.error(e.getMessage(), e);
 		}
 
+		// FIX FUER HERR WEBER
+		answerTO.setId(answerTO.getId() % 1000);
+		for (DesireTO each : answerTO.getDesires()) {
+			if (each.getStakeholder().getClientMobileToken() != null) {
+				each.getStakeholder()
+						.setClientMobileToken(each.getStakeholder().getClientMobileToken().substring(0, 4));
+			}
+		}
+
 		return answerTO;
 	}
 

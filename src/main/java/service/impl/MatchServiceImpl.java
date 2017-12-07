@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import model.Desire;
 import model.Match;
 import model.Stakeholder;
 import repository.MatchRepository;
@@ -24,6 +25,12 @@ public class MatchServiceImpl implements MatchService {
 	@Override
 	public List<Match> getAllNewMatches() {
 		return matchRepository.getAllNewMatches();
+	}
+
+	@Override
+	public void createMatch(List<Desire> desires) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
