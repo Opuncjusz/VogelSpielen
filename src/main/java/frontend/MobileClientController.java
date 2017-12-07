@@ -28,29 +28,13 @@ public class MobileClientController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
 
-	@RequestMapping(method = RequestMethod.POST, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public AnswerTO getStatusPOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
-
-		LOG.info("userId = " + userId);
-		LOG.info("requestBody = " + requestBody);
-
-		DesireTO desireTO = getDesireTO(requestBody);
-
-		return createAnswer();
-	}
-
 	@RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
-		LOG.warn("");
-		LOG.warn("");
-		LOG.warn("Achtung! Es wurde RequestMethod.GET durchgeführt!");
-		LOG.warn("Diese Method wird in der Zukunft nicht existieren!");
-		LOG.warn("");
-		LOG.warn("");
 
-		AnswerTO status = getStatusPOST(userId, "");
-		status.setMessage("[RequestMethod.GET] - ONLY POST METHOD WILL BE AVAILABLE");
-		return status;
+		LOG.info("==== getStatusGET ====");
+		LOG.info("userId = " + userId);
+
+		return createAnswer(userId);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "desire/put/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,12 +63,12 @@ public class MobileClientController {
 		return answer;
 	}
 
-	private AnswerTO createAnswer() {
+	private AnswerTO createAnswer(String userId) {
 		AnswerTO answerTO = new AnswerTO();
 		answerTO.setId(System.currentTimeMillis());
 		answerTO.setDesires(new ArrayList<DesireTO>());
 		answerTO.setMatches(new ArrayList<MatchTO>());
-		answerTO.setMessage("Mock answer");
+		answerTO.setMessage("Mock answer, userId: " + userId);
 
 		return answerTO;
 	}
