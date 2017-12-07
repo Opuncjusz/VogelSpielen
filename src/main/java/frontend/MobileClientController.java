@@ -24,8 +24,8 @@ public class MobileClientController {
     @Autowired
     private FinderService finderService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonTO getNearestFreeRooms(@PathVariable("userId") String userId) {
+    @RequestMapping(method = RequestMethod.POST, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public CommonTO getStatus(@PathVariable("userId") String userId) {
 
     	LOG.info("userId = " + userId);
     	
@@ -33,6 +33,13 @@ public class MobileClientController {
     	CommonTO commonTO = createCommonTO(status);
     	
         return commonTO;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getStatus() {
+    	String msg = "ONLY POST METHOD IST AVAILABLE";
+    	LOG.info(msg);
+    	return msg;
     }
     
     private CommonTO createCommonTO(long status) {
