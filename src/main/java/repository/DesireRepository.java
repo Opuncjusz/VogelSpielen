@@ -1,10 +1,10 @@
 package repository;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import model.Desire;
+import model.Stakeholder;
 
-@Repository
 public interface DesireRepository {
 
 	Desire getById(long id);
@@ -12,5 +12,9 @@ public interface DesireRepository {
 	void addOrUpdate(Desire desire);
 
 	void delete(Desire desire);
+
+    List<Desire> getAllDesires();
+
+    List<Desire> getAllDesiresByStakeholder(Stakeholder stakeholder);
 
 }
