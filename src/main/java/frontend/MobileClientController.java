@@ -23,7 +23,7 @@ public class MobileClientController {
 //    private FinderService finderService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CommonTO getStatus(@PathVariable("userId") String userId) {
+    public CommonTO getStatusPOST(@PathVariable("userId") String userId) {
 
     	LOG.info("userId = " + userId);
     	
@@ -34,11 +34,16 @@ public class MobileClientController {
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getStatus() {
-    	String msg = "ONLY POST METHOD IST AVAILABLE";
-    	LOG.info(msg);
-    	return msg;
+    public CommonTO getStatusGET(@PathVariable("userId") String userId) {
+        return getStatusPOST(userId);
     }
+    
+//    @RequestMapping(method = RequestMethod.GET, value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public String getStatus() {
+//    	String msg = "ONLY POST METHOD IST AVAILABLE";
+//    	LOG.info(msg);
+//    	return msg;
+//    }
     
     private CommonTO createCommonTO(long status) {
     	CommonTO commonTO = new CommonTO();
