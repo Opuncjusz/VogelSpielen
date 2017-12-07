@@ -1,7 +1,6 @@
 package frontend;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +18,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import common.AnswerTO;
 import common.DesireTO;
-import common.MatchTO;
 import model.Stakeholder;
 import service.DesireService;
+import service.MatchService;
 import starter.DevelopmentConfiguration;
 
 @CrossOrigin
@@ -33,6 +32,9 @@ public class MobileClientController {
 
 	@Autowired
 	private DesireService desireService;
+
+	@Autowired
+	private MatchService matchService;
 
 	@RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
@@ -76,7 +78,7 @@ public class MobileClientController {
 
 		answerTO.setId(System.currentTimeMillis());
 		answerTO.setDesires(desireService.getAllDesiresByStakeholder(stakeholder));
-		answerTO.setMatches(new ArrayList<MatchTO>());
+		answerTO.setMatches(matchService.getAllMatchesByStakeholder(stakeholder));
 		answerTO.setMessage("userId: " + userId);
 
 		return answerTO;
