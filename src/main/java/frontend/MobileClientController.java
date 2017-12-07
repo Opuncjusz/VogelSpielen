@@ -21,6 +21,7 @@ import common.DesireTO;
 import model.Stakeholder;
 import service.DesireService;
 import service.MatchService;
+import service.NotificationService;
 import starter.DevelopmentConfiguration;
 
 @CrossOrigin
@@ -29,6 +30,9 @@ import starter.DevelopmentConfiguration;
 public class MobileClientController {
 
     private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Autowired
     private DesireService desireService;
@@ -41,6 +45,8 @@ public class MobileClientController {
 
         LOG.info("==== getStatusGET ====");
         LOG.info("userId = " + userId);
+
+        notificationService.sendNotificationToOlek("Ty chory pojebie", "Fcuk you");
 
         return createAnswer(userId);
     }
