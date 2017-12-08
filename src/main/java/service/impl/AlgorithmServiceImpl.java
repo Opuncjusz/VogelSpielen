@@ -45,6 +45,17 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 		List<DesireTO> allDesires = desireService.getAllDesires();
 
 		for (DesireTO currentDesire : allDesires) {
+			System.out.println("############");
+			System.out.println(
+					"checkStakeholderIsDifferent = " + checkStakeholderIsDifferent(currentDesire, incomingDesire));
+			System.out.println("checkTimeWindowExists = " + checkTimeWindowExists(currentDesire, incomingDesire));
+			System.out.println("checkRequiredPeopleEnoughOrLess = "
+					+ checkRequiredPeopleEnoughOrLess(currentDesire, incomingDesire));
+			System.out.println("checkPlaceMatches = " + checkPlaceMatches(currentDesire, incomingDesire));
+			System.out.println("checkTotalsEqual = " + checkTotalsEqual(currentDesire, incomingDesire));
+			System.out.println(
+					"checkRequiredPeopleMeetsTotal = " + checkRequiredPeopleMeetsTotal(currentDesire, incomingDesire));
+			System.out.println("############");
 			if (checkStakeholderIsDifferent(currentDesire, incomingDesire)
 					&& checkTimeWindowExists(currentDesire, incomingDesire)
 					&& checkRequiredPeopleEnoughOrLess(currentDesire, incomingDesire)
@@ -68,6 +79,8 @@ public class AlgorithmServiceImpl implements AlgorithmService {
 
 				notificationService.sendNotification(incomingDesire.getStakeholder());
 				notificationService.sendNotification(currentDesire.getStakeholder());
+
+				System.out.println("STWORZYLEM MECZ");
 
 				return algorithmResult;
 			}
