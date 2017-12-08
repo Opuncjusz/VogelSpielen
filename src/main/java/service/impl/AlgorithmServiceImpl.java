@@ -21,7 +21,8 @@ import service.NotificationService;
 @Service
 public class AlgorithmServiceImpl implements AlgorithmService {
 
-    public static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");;
+    // public static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+    public static DateTimeFormatter DEFAULT_DATE_FORMAT = DateTimeFormat.forPattern("HH:mm");
 
     @Autowired
     private DesireService desireService;
