@@ -21,6 +21,7 @@ import common.AnswerTO;
 import common.DesireTO;
 import common.MatchTO;
 import model.Stakeholder;
+import service.AlgorithmService;
 import service.DesireService;
 import service.MatchService;
 import service.NotificationService;
@@ -31,86 +32,91 @@ import starter.DevelopmentConfiguration;
 @RequestMapping("/")
 public class MobileClientController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DevelopmentConfiguration.class);
 
-    @Autowired
-    private NotificationService notificationService;
+	@Autowired
+	private NotificationService notificationService;
 
-    @Autowired
-    private DesireService desireService;
+	@Autowired
+	private DesireService desireService;
 
-    @Autowired
-    private MatchService matchService;
+	@Autowired
+	private MatchService matchService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
+	@Autowired
+	private AlgorithmService algorithmService;
 
-        LOG.info("==== getStatusGET ====");
-        LOG.info("userId = " + userId);
+	@RequestMapping(method = RequestMethod.GET, value = "status/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO getStatusGET(@PathVariable("userId") String userId) {
 
-        return createAnswer(userId);
-    }
+		LOG.info("==== getStatusGET ====");
+		LOG.info("userId = " + userId);
 
-    @RequestMapping(method = RequestMethod.POST, value = "desire/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public AnswerTO putDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
+		return createAnswer(userId);
+	}
 
-        LOG.info("==== putDesirePOST ====");
-        LOG.info("userId = " + userId);
-        LOG.info("requestBody = " + requestBody);
+	@RequestMapping(method = RequestMethod.POST, value = "desire/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO putDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
 
-        DesireTO desireTO = getDesireTO(requestBody);
-        desireService.handleIncomingDesire(new Stakeholder(userId), desireTO);
+		LOG.info("==== putDesirePOST ====");
+		LOG.info("userId = " + userId);
+		LOG.info("requestBody = " + requestBody);
 
-        return createAnswer(userId);
-    }
+		DesireTO desireTO = getDesireTO(requestBody);
+		desireService.handleIncomingDesire(new Stakeholder(userId), desireTO);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "desire/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public AnswerTO deleteDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
+		algorithmService.calculateBasedOnIncoming(desireTO);
 
-        LOG.info("==== deleteDesirePOST ====");
-        LOG.info("userId = " + userId);
-        LOG.info("requestBody = " + requestBody);
+		return createAnswer(userId);
+	}
 
-        DesireTO desireTO = getDesireTO(requestBody);
-        desireService.canelDesire(desireTO);
+	@RequestMapping(method = RequestMethod.DELETE, value = "desire/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public AnswerTO deleteDesirePOST(@PathVariable("userId") String userId, @RequestBody String requestBody) {
 
-        return createAnswer(userId);
-    }
+		LOG.info("==== deleteDesirePOST ====");
+		LOG.info("userId = " + userId);
+		LOG.info("requestBody = " + requestBody);
 
-    private AnswerTO createAnswer(String userId) {
-        Stakeholder stakeholder = new Stakeholder(userId);
+		DesireTO desireTO = getDesireTO(requestBody);
+		desireService.canelDesire(desireTO);
 
-        AnswerTO answerTO = new AnswerTO();
+		return createAnswer(userId);
+	}
 
-        answerTO.setId(System.currentTimeMillis());
-        answerTO.setDesires(desireService.getAllDesiresByStakeholder(stakeholder));
+	private AnswerTO createAnswer(String userId) {
+		Stakeholder stakeholder = new Stakeholder(userId);
 
-        List<MatchTO> allMatchesByStakeholder = matchService.getAllMatchesByStakeholder(stakeholder);
+		AnswerTO answerTO = new AnswerTO();
 
-        answerTO.setMatches(allMatchesByStakeholder);
+		answerTO.setId(System.currentTimeMillis());
+		answerTO.setDesires(desireService.getAllDesiresByStakeholder(stakeholder));
 
-        try {
-            ObjectMapper mapperObj = new ObjectMapper();
-            String jsonStr = mapperObj.writeValueAsString(answerTO);
-            LOG.info("ANSWER: " + jsonStr);
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-        }
+		List<MatchTO> allMatchesByStakeholder = matchService.getAllMatchesByStakeholder(stakeholder);
 
-        return answerTO;
-    }
+		answerTO.setMatches(allMatchesByStakeholder);
 
-    private DesireTO getDesireTO(String body) {
-        if (StringUtils.isEmpty(body)) {
-            return new DesireTO();
-        }
+		try {
+			ObjectMapper mapperObj = new ObjectMapper();
+			String jsonStr = mapperObj.writeValueAsString(answerTO);
+			LOG.info("ANSWER: " + jsonStr);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+		}
 
-        try {
-            return new ObjectMapper().readValue(body, DesireTO.class);
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
+		return answerTO;
+	}
+
+	private DesireTO getDesireTO(String body) {
+		if (StringUtils.isEmpty(body)) {
+			return new DesireTO();
+		}
+
+		try {
+			return new ObjectMapper().readValue(body, DesireTO.class);
+		} catch (IOException e) {
+			LOG.error(e.getMessage(), e);
+			throw new IllegalArgumentException(e.getMessage());
+		}
+	}
 
 }
