@@ -43,8 +43,8 @@ public class AlgorithmServiceImplTest {
         DesireTO secondDesire = new DesireTO();
         secondDesire.setId(id);
         secondDesire.setPlace("miejsce");
-        secondDesire.setFrom("2017-12-07 15:00");
-        secondDesire.setTo("2017-12-07 16:00");
+        secondDesire.setFrom("2017-12-07 15:00:00");
+        secondDesire.setTo("2017-12-07 16:00:00");
         secondDesire.setTotal("4");
         secondDesire.setRequired("2");
         secondDesire.setStakeholder(secondStakeholder);
@@ -87,10 +87,10 @@ public class AlgorithmServiceImplTest {
         DesireTO firstDesire = createDefaultFirstDesire();
         DesireTO secondDesire = createDefaultSecondDesire();
 
-        firstDesire.setFrom("2017-12-07 14:00");
-        firstDesire.setTo("2017-12-07 15:00");
-        secondDesire.setFrom("2017-12-07 15:00");
-        secondDesire.setTo("2017-12-07 16:00");
+        firstDesire.setFrom("2017-12-07 14:00:00");
+        firstDesire.setTo("2017-12-07 15:00:00");
+        secondDesire.setFrom("2017-12-07 15:00:00");
+        secondDesire.setTo("2017-12-07 16:00:00");
 
         desireService.handleIncomingDesire(firstDesire.getStakeholder(), firstDesire);
 
@@ -105,10 +105,10 @@ public class AlgorithmServiceImplTest {
         DesireTO firstDesire = createDefaultFirstDesire();
         DesireTO secondDesire = createDefaultSecondDesire();
 
-        firstDesire.setFrom("2017-12-07 15:00");
-        firstDesire.setTo("2017-12-07 16:00");
-        secondDesire.setFrom("2017-12-07 14:00");
-        secondDesire.setTo("2017-12-07 15:00");
+        firstDesire.setFrom("2017-12-07 15:00:00");
+        firstDesire.setTo("2017-12-07 16:00:00");
+        secondDesire.setFrom("2017-12-07 14:00:00");
+        secondDesire.setTo("2017-12-07 15:00:00");
 
         desireService.handleIncomingDesire(firstDesire.getStakeholder(), firstDesire);
 
